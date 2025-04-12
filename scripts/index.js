@@ -38,9 +38,11 @@ buttonProfile.addEventListener('click', () => {
 
 function openModal(popup) {      
 	popup.classList.add('popup_is-opened');
+	popup.classList.add('popup_is-animated.');
 }
 function removeModal(popup) {      
 	popup.classList.remove('popup_is-opened');
+	popup.classList.remove('popup_is-animated.');
 }
 
 // функция редактирования профиля
@@ -61,6 +63,7 @@ function handleProfileFormSubmit(evt) {
 }
 
 profileFormElement.addEventListener('submit', handleProfileFormSubmit);
+
 
 // @todo: Функция создания карточки
 const addButton = content.querySelector('.profile__add-button');
@@ -87,10 +90,30 @@ function handleCardsFormSubmit(evt) {
 }
 
 cardPopup.addEventListener('submit', handleCardsFormSubmit);
-// @todo: Функция удаления карточки
+
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach(function (item) {
 	const card = addCard(item.name, item.link);
 	cardsContent.append(card);
 });
+
+
+// «Лайк» карточки
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('card__like-button')) {
+    event.target.classList.toggle('card__like-button_is-active');
+  }
+});
+
+
+// @todo: Функция удаления карточки
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('card__delete-button')) {
+    const card = event.target.closest('.card');
+    if (card) {
+      card.remove();
+    }
+  }
+});
+
