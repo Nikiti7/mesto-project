@@ -1,0 +1,41 @@
+{
+  "name": "frontend-developer-canonicals-mesto-step0-template",
+  "version": "1.0.0",
+  "description": "студент, когорта, стэк",
+  "homepage": "https://github.com/Nikiti7/mesto-project#readme",
+  "bugs": {
+    "url": "https://github.com/Nikiti7/mesto-project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikiti7/mesto-project.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjm",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "autoprefixer": "^10.4.21",
+    "babel-loader": "^10.0.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "cssnano": "^7.0.6",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "mini-css-extract-plugin": "^2.9.2",
+    "postcss-loader": "^8.1.1",
+    "webpack": "^5.99.6",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  },
+  "dependencies": {
+    "core-js": "^3.41.0",
+    "regenerator-runtime": "^0.14.1"
+  }
+}

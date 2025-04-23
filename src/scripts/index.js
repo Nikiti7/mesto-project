@@ -1,3 +1,17 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import '../pages/index.css';
+
+import logo from '../images/logo.svg';
+import avatar from '../images/avatar.jpg';
+
+import { initialCards } from './cards';
+
+
+document.querySelector('.logo').src = logo;
+document.querySelector('.profile__image').style.backgroundImage = `url(${avatar})`;
+
+
 const profileFormElement = document.querySelector('.popup_type_edit');
 const cardPopup = document.querySelector('.popup_type_new-card');
 const imagePopup = document.querySelector('.popup_type_image');
@@ -69,11 +83,22 @@ function handleCardsFormSubmit(evt) {
 function openModal(popup) {      
 	popup.classList.add('popup_is-opened');
 	popup.classList.add('popup_is-animated');
+	document.addEventListener('keydown', closeByEsc);
 }
 
 function closeModal(popup) {      
 	popup.classList.remove('popup_is-opened');
 	popup.classList.remove('popup_is-animated');
+	document.removeEventListener('keydown', closeByEsc);
+}
+
+function closeByEsc(evt){
+	if (evt.key === "Escape") {
+		const openedPopup = document.querySelector('.popup_is-opened');
+		if (openedPopup) {
+			closeModal(openedPopup);
+		}
+	}
 }
 
 // @todo: DOM узлы
@@ -124,3 +149,62 @@ initialCards.forEach(function (item) {
 	const card = createCard(item.name, item.link);
 	cardsContent.append(card);
 });
+
+
+// Валидация формы «Редактировать профиль»
+const profileForm = document.getElementById('edit-profile');
+const inputName = profileForm.querySelector('.popup__input_type_name');
+const aboutInput = profileForm.querySelector('.popup__input_type_description');
+const saveBtn = profileForm.querySelector('.popup__button');
+
+const validateField = (input, errorElem) => {
+  if (!input.validity.valid) {
+    errorElem.textContent = input.validationMessage;
+  } else {
+    errorElem.textContent = '';
+  }
+};
+
+const updateButtonState = () => {
+  saveBtn.disabled = !profileForm.checkValidity();
+};
+
+profileForm.addEventListener('input', () => {
+  validateField(inputName, document.getElementById('name-error'));
+  validateField(aboutInput, document.getElementById('about-error'));
+  updateButtonState();
+});
+
+profileForm.addEventListener('submit', (e) => {
+  if (!profileForm.checkValidity()) {
+    e.preventDefault();
+  }
+});
+
+// Валидация формы «Новое место»
+const placeForm = document.getElementById('new-place');
+const inputText = placeForm.querySelector('.popup__input_type_card-name');
+const inputUrl = placeForm.querySelector('.popup__input_type_url')
+const savePlaceBtn = placeForm.querySelector('.popup__button');
+
+const updateButton = () => {
+  savePlaceBtn.disabled = !placeForm.checkValidity();
+};
+
+updateButton(); 
+placeForm.addEventListener('input', () => {
+  validateField(inputText, document.getElementById('text-error'));
+  validateField(inputUrl, document.getElementById('url-error'));
+  updateButton();
+});
+
+placeForm.addEventListener('submit', (e) => {
+  if (!placeForm.checkValidity()) {
+    e.preventDefault();
+  }
+});
+
+// Закрытие поп-апа кликом на оверлей
+document.addEventListener('click', (event) => {
+	closeModal(event.target);
+})
